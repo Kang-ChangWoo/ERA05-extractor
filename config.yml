@@ -1,0 +1,6 @@
+project_title: Example case
+
+# if you want extract all files in `data' directory, please comment below `source_file_name' with pound sign.
+# if not, do not commet below `source_file_name' with pound sign.
+# source_file_name: '20201114_testdata.nc' 
+

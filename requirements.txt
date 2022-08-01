@@ -3,3 +3,4 @@ numpy
 netCDF4
 cftime
 notebook
+pyyaml
