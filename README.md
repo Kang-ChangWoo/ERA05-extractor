@@ -9,6 +9,7 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
 - [netCDF4](https://github.com/Unidata/netcdf4-python)
 - [cftime](https://unidata.github.io/cftime/installing.html)
 - [notebook](https://jupyter.org/install)
+- [pyyaml](https://pypi.org/project/PyYAML/)
 
 
 ### Instruction 
