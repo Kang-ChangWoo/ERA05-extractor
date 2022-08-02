@@ -13,34 +13,58 @@ from cftime import num2date, date2num
 # convert netCDF4 file into CSV file!
 ### input: <class 'netCDF4._netCDF4.Dataset'>
 ### return: <class 'pandas.DataFrame'>
+# #1. shape이 n,1,1인 경우로 가정하고 작성.
 def netCDF4_to_CSV( netCDF4_file ):
-    tmpDict = {}
-    metaDict = {}
-    
-    output_list = []
-    meta_data = []
-    column_name = []
+    tmp_dict = {}
+    meta_dict = {}
 
     for key in ["latitude","longitude"]:
         init_value = netCDF4_file[key][:].data
-        metaDict[key] = init_value      
+        meta_dict[key] = init_value      
 
     for key in ['time']:
         masked_array_dtime = [str(i) for i in netCDF4.num2date(netCDF4_file['time'],netCDF4_file['time'].units)] # it return masked_array
         length = len(masked_array_dtime)
-        array_ = np.array(masked_array_dtime).T.reshape([length ,1,1])
+        array_format = np.array(masked_array_dtime).T.reshape([length,1])
 
-        tmpDict[key] = array_
+        tmp_dict[key] = array_format
 
     # TODO expver..?
     for key in netCDF4_file.variables.keys():
         if key not in ["time","latitude","longitude",'expver']:
             init_value = netCDF4_file[key][:].data
-            array_ = np.array(init_value)
+            array_format = np.array(init_value)
+            array_format = array_format.T.reshape([length,1])
             
-            tmpDict[key] = array_
-            #output_list.append(output_dataset.variables[key][:].data)
-            #column_name.append(key)
+            tmp_dict[key] = array_format
     
-    return tmpDict, metaDict
+    return tmp_dict, meta_dict
 
+
+def dict_to_dataframe( info_dict, meta_dict  ):
+    column_names = [ ]
+    array_list = [ ]
+    
+    length = len(list(info_dict.items())[0][1])
+
+    for key_, val_ in list(meta_dict):
+        print(key_, val_)
+    
+    
+    for key_, val_ in list(info_dict.items()):
+        column_names.append(key_)
+        array_list.append(val_)
+    
+    
+    concated_df = pd.DataFrame(np.concatenate(array_list, columns = column_names, axis=1))
+
+    
+    return concated_df
+
+
+def measure_wind_info( tmpDict ):
+    
+    
+    print("test")
+    
+    return calculatedDict
