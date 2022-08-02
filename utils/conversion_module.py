@@ -47,16 +47,19 @@ def dict_to_dataframe( info_dict, meta_dict  ):
     
     length = len(list(info_dict.items())[0][1])
 
-    for key_, val_ in list(meta_dict):
-        print(key_, val_)
+    for key_, val_ in list(meta_dict.items()):
+        repeated_array = np.repeat(val_[0], length, axis=0)
+        repeated_array = repeated_array.reshape(length, -1)
+        column_names.append(key_)
+        array_list.append(repeated_array)
     
     
     for key_, val_ in list(info_dict.items()):
         column_names.append(key_)
         array_list.append(val_)
     
-    
-    concated_df = pd.DataFrame(np.concatenate(array_list, columns = column_names, axis=1))
+    concated_array = np.concatenate(array_list, axis=1)
+    concated_df =  pd.DataFrame(concated_array, columns =column_names)
 
     
     return concated_df
