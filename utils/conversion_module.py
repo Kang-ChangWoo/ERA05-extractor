@@ -8,6 +8,9 @@ import numpy as np
 import yaml
 from datetime import datetime, timedelta
 from cftime import num2date, date2num
+from metpy.calc import wind_speed, wind_direction #it 
+from metpy.units import units
+
 
 
 # convert netCDF4 file into CSV file!
@@ -65,9 +68,54 @@ def dict_to_dataframe( info_dict, meta_dict  ):
     return concated_df
 
 
-def measure_wind_info( tmpDict ):
+class WindInfoCalculator:
+    def __init__(self, u_column = 'u10', v_column = 'v10'):
+        self.u_column = u_column       
+        self.v_column = v_column
+
+    def calculate(self, record):
+        u = float(record[self.u_column]) * units.meter / units.second
+        v = float(record[self.v_column]) * units.meter / units.second
+        return [wind_direction(u,v), wind_speed(u,v)]
+
+
+def measure_wind_info( pandas_df ):
+    keys = pandas_df.columns.tolist()
+    df_list = []
     
+    if ('u10' in keys) and ('v10' in keys):
+        wind_calculator = WindInfoCalculator(u_column = 'u10', v_column = 'v10')
+        wind_information = pandas_df.apply(wind_calculator.calculate, axis=1)
+        
+        column_0 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_direction'
+        column_1 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_speed'
+        
+        tmp_array = pandas_df.apply(wind_calculator.calculate, axis=1)
+        tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
+
+        df_list.append(tmp_df)
+        
+    if ('u100' in keys) and ('v100' in keys):
+        wind_calculator = WindInfoCalculator(u_column = 'u100', v_column = 'v100')
+        wind_information = pandas_df.apply(wind_calculator.calculate, axis=1)
+        
+        column_0 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_direction'
+        column_1 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_speed'
+        
+        tmp_array = pandas_df.apply(wind_calculator.calculate, axis=1)
+        tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
+
+        df_list.append(tmp_df)
     
-    print("test")
+    calculated_num = len(df_list)
     
-    return calculatedDict
+    if calculated_num > 1:
+        concated_df = pd.concat([pandas_df] + df_list, axis=1)
+        return concated_df
+        
+    elif calculated_num == 1:
+        concated_df = pd.concat([pandas_df, df_list[0]], axis=1)
+        return concated_df
+        
+    elif calculated_num == 0:
+        return pandas_df

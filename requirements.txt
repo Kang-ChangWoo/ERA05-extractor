@@ -4,3 +4,4 @@ netCDF4
 cftime
 notebook
 pyyaml
+metpy
