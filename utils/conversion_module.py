@@ -56,7 +56,6 @@ def dict_to_dataframe( info_dict, meta_dict  ):
         column_names.append(key_)
         array_list.append(repeated_array)
     
-    
     for key_, val_ in list(info_dict.items()):
         column_names.append(key_)
         array_list.append(val_)
@@ -119,3 +118,8 @@ def measure_wind_info( pandas_df ):
         
     elif calculated_num == 0:
         return pandas_df
+    
+    
+def save_df( pandas_df, fname ):
+    pandas_df.to_csv(fname,index=True, header=True)
+    
