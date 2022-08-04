@@ -44,16 +44,29 @@ def netCDF4_to_CSV( netCDF4_file ):
                 array_format_a = np.array(init_value_a)
                 array_format_a = array_format_a.T.reshape([length,1])
                 
-                tmp_dict[key+'_a'] = array_format_a
-                desc_dict[key+'_a'] = netCDF4_file[key].long_name
-                
                 init_value_b = netCDF4_file[key][:].data[:,1,:,:]
-                array_format_b = np.array(init_value_a)
+                array_format_b = np.array(init_value_b)
                 array_format_b = array_format_b.T.reshape([length,1])
 
-                tmp_dict[key+'_b'] = array_format_b
-                desc_dict[key+'_b'] = netCDF4_file[key].long_name
+                if (array_format_a == array_format_b).all():
+                    tmp_dict[key] = array_format_a
+                    desc_dict[key] = netCDF4_file[key].long_name
                 
+                elif (array_format_a != array_format_b).all():
+                    
+                    array_format_a[array_format_a == -32767] = 0
+                    array_format_b[array_format_b == -32767] = 0
+
+                    sumed_array = array_format_a + array_format_b
+                    
+                    tmp_dict[key] = sumed_array
+                    desc_dict[key] = netCDF4_file[key].long_name
+
+                    #tmp_dict[key+'_a'] = array_format_a
+                    #desc_dict[key+'_a'] = netCDF4_file[key].long_name
+                    
+                    #tmp_dict[key+'_b'] = array_format_b
+                    #desc_dict[key+'_b'] = netCDF4_file[key].long_name
             
             else:
                 init_value = netCDF4_file[key][:].data
@@ -97,7 +110,11 @@ class WindInfoCalculator:
     def calculate(self, record):
         u = float(record[self.u_column]) * units.meter / units.second
         v = float(record[self.v_column]) * units.meter / units.second
-        return [wind_direction(u,v), wind_speed(u,v)]
+        
+        output_wind_dirc = float(str(wind_direction(u,v)).split()[0])
+        output_wind_speed = float(str(wind_speed(u,v)).split()[0])
+        
+        return [output_wind_dirc, output_wind_speed]
 
 
 def measure_wind_info( pandas_df ):
@@ -108,8 +125,8 @@ def measure_wind_info( pandas_df ):
         wind_calculator = WindInfoCalculator(u_column = 'u10', v_column = 'v10')
         wind_information = pandas_df.apply(wind_calculator.calculate, axis=1)
         
-        column_0 = '10m_wind_direction'
-        column_1 = '10m_wind_speed'
+        column_0 = '10m_wind_direction(degree)'
+        column_1 = '10m_wind_speed(meter/second)'
         
         tmp_array = pandas_df.apply(wind_calculator.calculate, axis=1)
         tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
@@ -120,8 +137,8 @@ def measure_wind_info( pandas_df ):
         wind_calculator = WindInfoCalculator(u_column = 'u100', v_column = 'v100')
         wind_information = pandas_df.apply(wind_calculator.calculate, axis=1)
         
-        column_0 = '100m_wind_direction'
-        column_1 = '100m_wind_speed'
+        column_0 = '100m_wind_direction(degree)'
+        column_1 = '100m_wind_speed(meter/second)'
         
         tmp_array = pandas_df.apply(wind_calculator.calculate, axis=1)
         tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
