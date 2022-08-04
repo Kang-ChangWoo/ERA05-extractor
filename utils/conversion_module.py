@@ -12,7 +12,6 @@ from metpy.calc import wind_speed, wind_direction #it
 from metpy.units import units
 
 
-
 # convert netCDF4 file into CSV file!
 ### input: <class 'netCDF4._netCDF4.Dataset'>
 ### return: <class 'pandas.DataFrame'>
@@ -86,8 +85,8 @@ def measure_wind_info( pandas_df ):
         wind_calculator = WindInfoCalculator(u_column = 'u10', v_column = 'v10')
         wind_information = pandas_df.apply(wind_calculator.calculate, axis=1)
         
-        column_0 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_direction'
-        column_1 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_speed'
+        column_0 = '10m_wind_direction'
+        column_1 = '10m_wind_speed'
         
         tmp_array = pandas_df.apply(wind_calculator.calculate, axis=1)
         tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
@@ -98,8 +97,8 @@ def measure_wind_info( pandas_df ):
         wind_calculator = WindInfoCalculator(u_column = 'u100', v_column = 'v100')
         wind_information = pandas_df.apply(wind_calculator.calculate, axis=1)
         
-        column_0 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_direction'
-        column_1 = wind_calculator.u_column + '_' + wind_calculator.v_column + '_' + 'wind_speed'
+        column_0 = '100m_wind_direction'
+        column_1 = '100m_wind_speed'
         
         tmp_array = pandas_df.apply(wind_calculator.calculate, axis=1)
         tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
@@ -120,6 +119,7 @@ def measure_wind_info( pandas_df ):
         return pandas_df
     
     
-def save_df( pandas_df, fname ):
+def save_df( pandas_df, project_title , fname ):
+    fname = './result/[' + project_title + '] '+ fname
     pandas_df.to_csv(fname,index=True, header=True)
     
