@@ -19,4 +19,4 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
    pip install -r requirements.txt
    ```
    
-![LOGO]([https://github.com/Kang-ChangWoo/ERA05_extractor/blob/main/src/blue%20wind%20engineering%20logo.png])
+![LOGO]([./src/blue_wind_engineering_logo.png])
