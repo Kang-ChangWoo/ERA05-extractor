@@ -21,5 +21,5 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
 
 <p align="center">
   <img src="./src/blue_wind_engineering_logo.pnge" width="350" title="hover text">
-  <img src="./src/blue_wind_engineering_logo.png" width="350" alt="accessibility text">
+  <img src="Logo" width="350" alt="accessibility text">
 </p>
