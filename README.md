@@ -22,6 +22,8 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
    ```
 
 ### Contact
+If you have any questions, please create issues in this repository or email to official e-mail address.(jone.oh@bluewind-eng.com) 
+
 <p align="center">
   <img src="./src/blue_wind_engineering_logo.png" width="250" alt="Logo">
 </p>
