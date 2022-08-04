@@ -19,10 +19,13 @@ from metpy.units import units
 def netCDF4_to_CSV( netCDF4_file ):
     tmp_dict = {}
     meta_dict = {}
+    desc_dict = {}
+    length = 0
 
     for key in ["latitude","longitude"]:
         init_value = netCDF4_file[key][:].data
-        meta_dict[key] = init_value      
+        meta_dict[key] = init_value
+        desc_dict[key] = netCDF4_file[key].long_name
 
     for key in ['time']:
         masked_array_dtime = [str(i) for i in netCDF4.num2date(netCDF4_file['time'],netCDF4_file['time'].units)] # it return masked_array
@@ -30,17 +33,37 @@ def netCDF4_to_CSV( netCDF4_file ):
         array_format = np.array(masked_array_dtime).T.reshape([length,1])
 
         tmp_dict[key] = array_format
+        desc_dict[key] = netCDF4_file[key].long_name
 
     # TODO expver..?
     for key in netCDF4_file.variables.keys():
         if key not in ["time","latitude","longitude",'expver']:
-            init_value = netCDF4_file[key][:].data
-            array_format = np.array(init_value)
-            array_format = array_format.T.reshape([length,1])
             
-            tmp_dict[key] = array_format
+            if len(netCDF4_file[key].get_dims()) > 3:
+                init_value_a = netCDF4_file[key][:].data[:,0,:,:]
+                array_format_a = np.array(init_value_a)
+                array_format_a = array_format_a.T.reshape([length,1])
+                
+                tmp_dict[key+'_a'] = array_format_a
+                desc_dict[key+'_a'] = netCDF4_file[key].long_name
+                
+                init_value_b = netCDF4_file[key][:].data[:,1,:,:]
+                array_format_b = np.array(init_value_a)
+                array_format_b = array_format_b.T.reshape([length,1])
+
+                tmp_dict[key+'_b'] = array_format_b
+                desc_dict[key+'_b'] = netCDF4_file[key].long_name
+                
+            
+            else:
+                init_value = netCDF4_file[key][:].data
+                array_format = np.array(init_value)
+                array_format = array_format.T.reshape([length,1])
+
+                tmp_dict[key] = array_format
+                desc_dict[key] = netCDF4_file[key].long_name
     
-    return tmp_dict, meta_dict
+    return tmp_dict, meta_dict, desc_dict
 
 
 def dict_to_dataframe( info_dict, meta_dict  ):
@@ -104,7 +127,9 @@ def measure_wind_info( pandas_df ):
         tmp_df = pd.DataFrame(tmp_array.tolist(), columns = [column_0, column_1])
 
         df_list.append(tmp_df)
-    
+
+        
+        
     calculated_num = len(df_list)
     
     if calculated_num > 1:
