@@ -18,4 +18,8 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
    ```
    pip install -r requirements.txt
    ```
-![Logo](./src/blue_wind_engineering_logo.png)
+
+<p align="center">
+  <img src="./src/blue_wind_engineering_logo.pnge" width="350" title="hover text">
+  <img src="./src/blue_wind_engineering_logo.png" width="350" alt="accessibility text">
+</p>
