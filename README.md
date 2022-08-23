@@ -24,7 +24,7 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
 3. Run each cells according to instructions.
 
 ### Dataset preparation
-You should download needed `netCDF4` files in [the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=overview, "Copernicus Data Center link")
+You should download needed `netCDF4` files in [the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=overview, "Copernicus Data Center link") or other sources.  Some data array in `netCDF4` file can have one more dimension if you're downloading the latest date file. 
 
 ### Contact
 If you have any questions, please create issues in this repository or email to official e-mail address. (jone.oh@bluewind-eng.com) 
