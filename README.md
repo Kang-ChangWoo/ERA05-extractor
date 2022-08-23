@@ -4,7 +4,6 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
   <img src="./src/abstract_img.png" width="800" alt="Logo">
 </p>
 
-
 ### Requirements
 - [pandas](https://pandas.pydata.org/docs/getting_started/install.html)
 - [numpy](https://numpy.org/install/)
@@ -22,7 +21,10 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
    ```
 2. Open with Ipython file `main.ipynb`.
 
-3. Run each cells according to instruction.
+3. Run each cells according to instructions.
+
+### Dataset preparation
+You should download needed `netCDF4` files in [the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=overview, "Copernicus Data Center link")
 
 ### Contact
 If you have any questions, please create issues in this repository or email to official e-mail address. (jone.oh@bluewind-eng.com) 
