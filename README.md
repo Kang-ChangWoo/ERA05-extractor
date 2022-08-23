@@ -20,7 +20,9 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
    ```
    pip install -r requirements.txt
    ```
-2. Open with Ipython file `main.ipynb`
+2. Open with Ipython file `main.ipynb`.
+
+3. Run each cells according to instruction.
 
 ### Contact
 If you have any questions, please create issues in this repository or email to official e-mail address. (jone.oh@bluewind-eng.com) 
