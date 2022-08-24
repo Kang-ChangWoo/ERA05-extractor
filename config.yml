@@ -1,4 +1,4 @@
-project_title: Example case
+project_title: ERA5 climate data
 
 # if you want extract all files in `data' directory, please comment below `source_file_name' with pound sign.
 # if not, do not commet below `source_file_name' with pound sign.
