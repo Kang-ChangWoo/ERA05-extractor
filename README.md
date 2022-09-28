@@ -1,4 +1,4 @@
-# ERA05_extractor
+# ERA05_extractor `22 09 28
 This repository aims to extract formatted CSV file(.csv) from NetCDF format file(.cdf) downloaded from the Copernicus Data Store.
 <p align="center">
   <img src="./src/abstract_img.png" width="800" alt="Logo">
