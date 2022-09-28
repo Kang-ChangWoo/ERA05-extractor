@@ -32,8 +32,8 @@ You should download needed `netCDF4` files in [the Climate Data Store](https://c
 
 date | details 
 ---- | ---- 
-August 24, 2022. | initially released
-September 28, 2022. | error fixed 
+Aug. 24, 2022. | initially released
+Sep. 28, 2022. | error fixed 
 
 
 
