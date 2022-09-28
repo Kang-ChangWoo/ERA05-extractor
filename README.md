@@ -1,8 +1,6 @@
 # ERA05_extractor 
 This repository aims to extract formatted CSV file(.csv) from NetCDF format file(.cdf) downloaded from the Copernicus Data Store. 
 
-(updated on September 28, 2022.)
-
 <p align="center">
   <img src="./src/abstract_img.png" width="800" alt="Logo">
 </p>
@@ -28,6 +26,16 @@ This repository aims to extract formatted CSV file(.csv) from NetCDF format file
 
 ### Dataset preparation
 You should download needed `netCDF4` files in [the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=overview, "Copernicus Data Center link") or other sources.  When you used the Climate Data Store, some data array in `netCDF4` file can have one more dimension if you're downloading the latest date file. However, this code will handle them.
+
+
+### Update log
+
+date | details 
+---- | ---- 
+August 24, 2022. | initially released
+September 28, 2022. | error fixed 
+
+
 
 ### Contact
 If you have any questions, please create issues in this repository or email to official e-mail address. (jone.oh@bluewind-eng.com) 
